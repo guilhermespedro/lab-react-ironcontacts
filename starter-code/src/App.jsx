@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import contacts from "./contacts.json";
 import "./App.css";
+
 class App extends Component {
   constructor() {
     super();
@@ -8,6 +9,8 @@ class App extends Component {
     this.state.contacts = contacts.slice(0, 5);
     this.addRandom = this.addRandom.bind(this);
     this.deleteContact = this.deleteContact.bind(this);
+    this.sortName = this.sortName.bind(this);
+    this.sortPopularity = this.sortPopularity.bind(this);
   }
   makeRow(contact, key) {
     return (
@@ -40,11 +43,25 @@ class App extends Component {
     newArray.splice(key, 1);
     this.setState({ contacts: newArray });
   }
+  sortName() {
+    this.setState({
+      contacts: this.state.contacts.sort((a, b) => (a.name > b.name ? 1 : -1))
+    });
+  }
+  sortPopularity() {
+    this.setState({
+      contacts: this.state.contatcs.sort((a, b) =>
+        a.popularity > b.popularity ? 1 : -1
+      )
+    });
+  }
   render() {
     return (
       <div className="App">
         <h1>IronContacts</h1>
         <button onClick={this.addRandom}>Add random contact</button>
+        <button onClick={this.sortName}>Sort by Name</button>
+        <button onClick={this.sortPopularity}>Sort by popularity</button>
         <table>
           <thead>
             <tr>
